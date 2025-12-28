@@ -1,7 +1,8 @@
 :root {
-  --header-color: #3b3f5c;
-  --bg-color: #f2f3f8;
-  --button-border: #3b3f5c;
+  --blue-neon: #00e5ff;
+  --red-neon: #ff1744;
+  --bg: radial-gradient(circle at top, #0a0f2c, #050816);
+  --card-bg: rgba(10, 15, 44, 0.75);
 }
 
 * {
@@ -11,89 +12,96 @@
 
 body {
   margin: 0;
-  background: var(--bg-color);
-  text-align: center;
-}
-
-header {
-  background: var(--header-color);
+  min-height: 100vh;
+  background: var(--bg);
   color: white;
-  padding: 35px 20px;
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
-}
-
-.header-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
+}
+
+.top-bar {
+  padding: 14px 16px;
+}
+
+.logo {
+  width: 42px;
+}
+
+.card {
+  margin: auto 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border-radius: 28px;
+  padding: 30px 22px 42px;
+  text-align: center;
+  box-shadow:
+    0 0 25px rgba(0,229,255,0.15),
+    0 0 35px rgba(255,23,68,0.12);
+  border-top: 3px solid var(--blue-neon);
+  border-bottom: 3px solid var(--red-neon);
 }
 
 h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
 }
 
-p {
-  margin: 0 0 10px;
-  opacity: 0.9;
+h1 span {
+  color: var(--blue-neon);
+  text-shadow: 0 0 8px rgba(0,229,255,0.8);
 }
+
+.subtitle {
+  margin: 12px 0 20px;
+  opacity: 0.85;
+}
+
 .buttons {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  width: 100%;
-  max-width: 320px;
 }
 
 button {
-  background: rgba(255, 255, 255, 0.18);
-  border: 2px solid var(--button-border);
+  background: transparent;
+  border: 2px solid var(--blue-neon);
   color: white;
   padding: 15px;
-  border-radius: 14px;
+  border-radius: 16px;
   font-size: 1rem;
-  backdrop-filter: blur(6px);
   cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,229,255,0.6);
+}
+
+button:nth-child(even) {
+  border-color: var(--red-neon);
+  box-shadow: 0 0 12px rgba(255,23,68,0.6);
 }
 
 button:active {
-  transform: scale(0.97);
-}
-
-.image-link img {
-  width: 120px;
-  border-radius: 16px;
-}
-
-/* CONTENIDO */
-main, section {
-  padding: 35px 20px;
-}
-
-main button,
-section button {
-  color: var(--header-color);
+  transform: scale(0.96);
 }
 
 .hidden {
   display: none;
 }
 
+.decor-image {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  width: 90px;
+  opacity: 0.85;
+}
+
 .credit {
   position: fixed;
-  bottom: 10px;
-  right: 12px;
+  bottom: 14px;
+  left: 14px;
   font-size: 0.75rem;
-  opacity: 0.75;
 }
 
 .credit a {
-  color: var(--header-color);
+  color: var(--blue-neon);
   text-decoration: none;
-}
-
-.credit a:hover {
-  opacity: 1;
 }
