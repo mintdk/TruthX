@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,36 +15,38 @@
 
 <main class="card">
 
- <h1>
-  WELCOME TO
-  <span class="truth">Truth</span><span class="x-neon">X</span>
-</h1>
-  <p class="subtitle">Choose your language</p>
+  <h1>
+    Welcome to
+    <span class="truth">Truth</span><span class="x-neon">X</span>
+  </h1>
+
+  <p class="subtitle" id="subtitle">Choose your language</p>
 
   <div class="buttons">
-    <button onclick="selectLanguage('es')">Español</button>
-    <button onclick="selectLanguage('en')">English</button>
-    <button onclick="selectLanguage('fr')">Français</button>
+    <button id="btnEs" onclick="selectLanguage('es')">Spanish</button>
+    <button id="btnEn" onclick="selectLanguage('en')">English</button>
+    <button id="btnFr" onclick="selectLanguage('fr')">French</button>
   </div>
 
   <div id="options" class="hidden">
-    <p class="subtitle">How do you want to play?</p>
+    <p class="subtitle" id="playTitle">How do you want to play?</p>
     <div class="buttons">
-      <button onclick="selectMode('offline')">Offline</button>
-      <button onclick="selectMode('online')">Online</button>
+      <button id="btnOffline" onclick="selectMode('offline')">Offline</button>
+      <button id="btnOnline" onclick="selectMode('online')">Online</button>
     </div>
   </div>
 
   <div id="styles" class="hidden">
-    <p class="subtitle">Mode</p>
+    <p class="subtitle" id="modeTitle">Mode</p>
     <div class="buttons">
-      <button onclick="selectStyle('friendly')">Friendly</button>
-      <button onclick="selectStyle('hot')">Hot</button>
-      <button onclick="selectStyle('couples')">Couples</button>
+      <button id="btnFriendly" onclick="selectStyle('friendly')">Friendly</button>
+      <button id="btnHot" onclick="selectStyle('hot')">Hot</button>
+      <button id="btnCouples" onclick="selectStyle('couples')">Couples</button>
     </div>
   </div>
 
 </main>
+
 <a href="https://mintdk.github.io/Mintdk/" target="_blank">
   <img src="assets/mintdk.png" alt="MintDK" class="decor-image">
 </a>
