@@ -105,3 +105,18 @@ button:active {
   color: var(--blue-neon);
   text-decoration: none;
 }
+.truth {
+  color: var(--blue-neon);
+  text-shadow:
+    0 0 6px rgba(0,229,255,0.8),
+    0 0 14px rgba(0,229,255,0.6);
+}
+
+.x-neon {
+  color: var(--red-neon);
+  margin-left: 2px;
+  text-shadow:
+    0 0 6px rgba(255,23,68,0.9),
+    0 0 16px rgba(255,23,68,0.8),
+    0 0 30px rgba(255,23,68,0.6);
+}
