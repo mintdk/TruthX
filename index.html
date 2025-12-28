@@ -9,10 +9,12 @@
 
 <body>
 
+<!-- TOP BAR -->
 <header class="top-bar">
-  <img src="logo.png" alt="TruthX Logo" class="logo">
+  <img src="assets/logo.png" alt="TruthX Logo" class="logo">
 </header>
 
+<!-- CARD -->
 <main class="card">
 
   <h1>Bienvenido a <span>TruthX</span></h1>
@@ -21,36 +23,41 @@
   <div class="buttons">
     <button onclick="selectLanguage('es')">Español</button>
     <button onclick="selectLanguage('en')">English</button>
-    <button onclick="selectLanguage('pt')">Português</button>
+    <button onclick="selectLanguage('fr')">Français</button>
   </div>
 
   <div id="options" class="hidden">
     <p class="subtitle">¿Cómo quieres jugar?</p>
     <div class="buttons">
-      <button>Offline</button>
-      <button>Online</button>
+      <button onclick="selectMode('offline')">Offline</button>
+      <button onclick="selectMode('online')">Online</button>
     </div>
   </div>
 
   <div id="styles" class="hidden">
     <p class="subtitle">Modo</p>
     <div class="buttons">
-      <button>Amistoso</button>
-      <button>Coqueto</button>
-      <button>Pareja</button>
+      <button onclick="selectStyle('amistoso')">Amistoso</button>
+      <button onclick="selectStyle('coqueto')">Coqueto</button>
+      <button onclick="selectStyle('pareja')">Pareja</button>
     </div>
   </div>
 
 </main>
 
-<img src="assets/mintdk.png" alt="Decoración" class="decor-image">
+<!-- IMAGEN CLICKEABLE -->
+<a href="https://mintdk.github.io/Mintdk/" target="_blank">
+  <img src="assets/mintdk.png" alt="MintDK" class="decor-image">
+</a>
 
+<!-- FOOTER -->
 <footer class="credit">
   <a href="https://www.instagram.com/min_tdk/" target="_blank">
     Creado por MintDK
   </a>
 </footer>
 
+<!-- FIREBASE + MAIN -->
 <script type="module" src="main.js"></script>
 </body>
 </html>
