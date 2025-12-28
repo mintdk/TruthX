@@ -9,53 +9,48 @@
 
 <body>
 
-<header>
-  <div class="header-content">
-    <h1>Bienvenido a TruthX</h1>
-    <p>Elige tu idioma</p>
-
-    <div class="buttons">
-      <button onclick="selectLanguage('es')">Español</button>
-      <button onclick="selectLanguage('en')">English</button>
-      <button onclick="selectLanguage('pt')">Português</button>
-    </div>
-
-    <a 
-      href="https://mintdk.github.io/Mintdk/" 
-      target="_blank" 
-      class="image-link"
-    >
-      <img src="image.png" alt="MintDK">
-    </a>
-  </div>
+<header class="top-bar">
+  <img src="logo.png" alt="TruthX Logo" class="logo">
 </header>
 
-<main id="options" class="hidden">
-  <p>¿Cómo quieres jugar?</p>
+<main class="card">
+
+  <h1>Bienvenido a <span>TruthX</span></h1>
+  <p class="subtitle">Elige tu idioma</p>
+
   <div class="buttons">
-    <button onclick="selectMode('offline')">Offline</button>
-    <button onclick="selectMode('online')">Online</button>
+    <button onclick="selectLanguage('es')">Español</button>
+    <button onclick="selectLanguage('en')">English</button>
+    <button onclick="selectLanguage('pt')">Português</button>
   </div>
+
+  <div id="options" class="hidden">
+    <p class="subtitle">¿Cómo quieres jugar?</p>
+    <div class="buttons">
+      <button>Offline</button>
+      <button>Online</button>
+    </div>
+  </div>
+
+  <div id="styles" class="hidden">
+    <p class="subtitle">Modo</p>
+    <div class="buttons">
+      <button>Amistoso</button>
+      <button>Coqueto</button>
+      <button>Pareja</button>
+    </div>
+  </div>
+
 </main>
 
-<section id="styles" class="hidden">
-  <p>Selecciona el modo</p>
-  <div class="buttons">
-    <button>Amistoso</button>
-    <button>Coqueto</button>
-    <button>Pareja</button>
-  </div>
-</section>
+<img src="assets/mintdk.png" alt="Decoración" class="decor-image">
 
 <footer class="credit">
-  <a 
-    href="https://www.instagram.com/min_tdk/" 
-    target="_blank"
-  >
+  <a href="https://www.instagram.com/min_tdk/" target="_blank">
     Creado por MintDK
   </a>
 </footer>
 
-<script src="main.js"></script>
+<script type="module" src="main.js"></script>
 </body>
 </html>
