@@ -14,7 +14,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let userChoice = {
-  language: "en"
+  language: localStorage.getItem("language") || "en"
 };
 
 const translations = {
@@ -33,7 +33,6 @@ const translations = {
       couples: "Parejas"
     }
   },
-
   en: {
     subtitle: "Choose your language",
     playTitle: "How do you want to play?",
@@ -49,7 +48,6 @@ const translations = {
       couples: "Couples"
     }
   },
-
   fr: {
     subtitle: "Choisis ta langue",
     playTitle: "Comment veux-tu jouer ?",
@@ -91,12 +89,15 @@ function applyLanguage(lang) {
 
 function selectLanguage(lang) {
   userChoice.language = lang;
+  localStorage.setItem("language", lang);
   applyLanguage(lang);
   document.getElementById("options").classList.remove("hidden");
 }
 
 function selectMode(mode) {
   userChoice.mode = mode;
+  localStorage.setItem("mode", mode);
+
   const styles = document.getElementById("styles");
   styles.classList.remove("hidden");
   styles.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -104,6 +105,7 @@ function selectMode(mode) {
 
 async function selectStyle(style) {
   userChoice.style = style;
+  localStorage.setItem("style", style);
 
   await setDoc(
     doc(db, "sessions", Date.now().toString()),
@@ -113,8 +115,14 @@ async function selectStyle(style) {
     }
   );
 
-  alert("Selection saved 🔥");
+  if (userChoice.mode === "offline" && style === "friendly") {
+    window.location.href = "offly.html";
+  } else {
+    alert("Mode coming soon 🔥");
+  }
 }
+
+applyLanguage(userChoice.language);
 
 window.selectLanguage = selectLanguage;
 window.selectMode = selectMode;
