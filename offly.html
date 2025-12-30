@@ -1,1 +1,35 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthX • Offline</title>
+
+  <link rel="stylesheet" href="offly.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <h1 id="title">Offline Friendly</h1>
+
+    <div class="add-player">
+      <input
+        type="text"
+        id="playerInput"
+        placeholder="Enter player name"
+      />
+      <button onclick="addPlayer()">+</button>
+    </div>
+
+    <div id="playersList" class="players"></div>
+
+    <button class="start-btn" onclick="startGame()" id="startBtn">
+      Start Game
+    </button>
+
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
