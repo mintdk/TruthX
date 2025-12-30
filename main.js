@@ -1,38 +1,9 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_MESSAGING_ID",
-  appId: "TU_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 let userChoice = {
-  language: "en"
+  language: "en",
+  mode: null,
+  style: null
 };
-
 const translations = {
-  en: {
-    subtitle: "Choose your language",
-    playTitle: "How do you want to play?",
-    modeTitle: "Mode",
-    buttons: {
-      es: "Spanish",
-      en: "English",
-      fr: "French",
-      offline: "Offline",
-      online: "Online",
-      friendly: "Friendly",
-      hot: "Hot",
-      couples: "Couples"
-    }
-  },
   es: {
     subtitle: "Elige tu idioma",
     playTitle: "¿Cómo quieres jugar?",
@@ -46,6 +17,21 @@ const translations = {
       friendly: "Amistoso",
       hot: "Hot",
       couples: "Parejas"
+    }
+  },
+  en: {
+    subtitle: "Choose your language",
+    playTitle: "How do you want to play?",
+    modeTitle: "Mode",
+    buttons: {
+      es: "Spanish",
+      en: "English",
+      fr: "French",
+      offline: "Offline",
+      online: "Online",
+      friendly: "Friendly",
+      hot: "Hot",
+      couples: "Couples"
     }
   },
   fr: {
@@ -90,35 +76,38 @@ function applyLanguage(lang) {
 function selectLanguage(lang) {
   userChoice.language = lang;
   localStorage.setItem("language", lang);
+
   applyLanguage(lang);
   document.getElementById("options").classList.remove("hidden");
 }
-
 function selectMode(mode) {
   userChoice.mode = mode;
-  document.getElementById("styles").classList.remove("hidden");
+  localStorage.setItem("mode", mode);
+
+  const styles = document.getElementById("styles");
+  styles.classList.remove("hidden");
+  styles.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-async function selectStyle(style) {
+function selectStyle(style) {
   userChoice.style = style;
-
-  localStorage.setItem("mode", userChoice.mode);
   localStorage.setItem("style", style);
 
-  await setDoc(doc(db, "sessions", Date.now().toString()), {
-    ...userChoice,
-    createdAt: new Date()
-  });
-
   if (userChoice.mode === "offline" && style === "friendly") {
-    window.location.href = "offly.html";
+    window.location.href = "/TruthX/offly.html";
   } else {
-    alert("This mode is coming soon 🔥");
+    alert("Mode coming soon 🔥");
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedLang = localStorage.getItem("language");
+  if (savedLang) {
+    userChoice.language = savedLang;
+    applyLanguage(savedLang);
+  }
+});
 
 window.selectLanguage = selectLanguage;
 window.selectMode = selectMode;
 window.selectStyle = selectStyle;
-
-applyLanguage("en");
