@@ -14,25 +14,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let userChoice = {
-  language: localStorage.getItem("language") || "en"
+  language: "en"
 };
 
 const translations = {
-  es: {
-    subtitle: "Elige tu idioma",
-    playTitle: "¿Cómo quieres jugar?",
-    modeTitle: "Modo",
-    buttons: {
-      es: "Español",
-      en: "Inglés",
-      fr: "Francés",
-      offline: "Offline",
-      online: "Online",
-      friendly: "Amistoso",
-      hot: "Hot",
-      couples: "Parejas"
-    }
-  },
   en: {
     subtitle: "Choose your language",
     playTitle: "How do you want to play?",
@@ -46,6 +31,21 @@ const translations = {
       friendly: "Friendly",
       hot: "Hot",
       couples: "Couples"
+    }
+  },
+  es: {
+    subtitle: "Elige tu idioma",
+    playTitle: "¿Cómo quieres jugar?",
+    modeTitle: "Modo",
+    buttons: {
+      es: "Español",
+      en: "Inglés",
+      fr: "Francés",
+      offline: "Offline",
+      online: "Online",
+      friendly: "Amistoso",
+      hot: "Hot",
+      couples: "Parejas"
     }
   },
   fr: {
@@ -96,34 +96,29 @@ function selectLanguage(lang) {
 
 function selectMode(mode) {
   userChoice.mode = mode;
-  localStorage.setItem("mode", mode);
-
-  const styles = document.getElementById("styles");
-  styles.classList.remove("hidden");
-  styles.scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("styles").classList.remove("hidden");
 }
 
 async function selectStyle(style) {
   userChoice.style = style;
+
+  localStorage.setItem("mode", userChoice.mode);
   localStorage.setItem("style", style);
 
-  await setDoc(
-    doc(db, "sessions", Date.now().toString()),
-    {
-      ...userChoice,
-      createdAt: new Date()
-    }
-  );
+  await setDoc(doc(db, "sessions", Date.now().toString()), {
+    ...userChoice,
+    createdAt: new Date()
+  });
 
   if (userChoice.mode === "offline" && style === "friendly") {
     window.location.href = "offly.html";
   } else {
-    alert("Mode coming soon 🔥");
+    alert("This mode is coming soon 🔥");
   }
 }
-
-applyLanguage(userChoice.language);
 
 window.selectLanguage = selectLanguage;
 window.selectMode = selectMode;
 window.selectStyle = selectStyle;
+
+applyLanguage("en");
