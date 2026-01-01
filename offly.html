@@ -1,53 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TruthX – Offline Friendly</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruthX Offline</title>
   <link rel="stylesheet" href="offly.css">
 </head>
-
 <body>
 
-<main class="container">
+  <div id="setup" class="card">
+    <h2>Agregar jugadores</h2>
+    <input id="nameInput" placeholder="Nombre">
+    <button onclick="addName()">Agregar</button>
+    <button onclick="startGame()">Empezar</button>
+  </div>
 
-  <section id="addPlayers">
-    <h2 id="title"></h2>
-    <input id="playerInput" />
-    <button id="addBtn"></button>
-    <div id="playersList"></div>
-    <button id="startBtn" class="hidden"></button>
-  </section>
+  <div id="players" class="players"></div>
 
-  <section id="game" class="hidden">
-    <div id="namesBox"></div>
-    <button id="playBtn"></button>
+  <div id="choices" class="card hidden">
+    <button class="big" onclick="chooseTruth()">VERDAD</button>
+    <button class="big" onclick="chooseDare()">RETO</button>
+  </div>
 
-    <div id="modal" class="hidden">
-      <h3 id="currentPlayer"></h3>
+  <div id="result" class="card hidden">
+    <h2 id="playerName"></h2>
+    <p id="challengeText"></p>
 
-      <div class="buttons">
-        <button id="challengeBtn" class="green"></button>
-        <button id="truthBtn" class="red"></button>
-      </div>
+    <button onclick="giveCompliment()">Cumplido</button>
+    <button onclick="nextTurn()">Abandonar</button>
+  </div>
 
-      <p id="resultText"></p>
-
-      <div class="buttons">
-        <button id="completeBtn"></button>
-        <button id="retireBtn" class="gray"></button>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<audio id="sndClick" src="sounds/click.mp3"></audio>
-<audio id="sndSpin" src="sounds/spin.mp3"></audio>
-<audio id="sndSelect" src="sounds/select.mp3"></audio>
-<audio id="sndWin" src="sounds/win.mp3"></audio>
-
-<script type="module" src="offly.js"></script>
-<script src="offly.data.js"></script>
+  <script src="offly.data.js"></script>
+  <script src="offly.js"></script>
 </body>
 </html>
