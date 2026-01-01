@@ -1,36 +1,48 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TruthX Offline</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TruthX – Offline Friendly</title>
+
   <link rel="stylesheet" href="offly.css">
 </head>
+
 <body>
 
-  <div id="setup" class="card">
-    <h2>Agregar jugadores</h2>
-    <input id="nameInput" placeholder="Nombre">
-    <button onclick="addName()">Agregar</button>
-    <button onclick="startGame()">Empezar</button>
-  </div>
+<div class="container">
 
-  <div id="players" class="players"></div>
+  <section id="addPlayers">
+    <h1 class="title">Truth<span>X</span></h1>
+    <p class="subtitle">Add players</p>
 
-  <div id="choices" class="card hidden">
-    <button class="big" onclick="chooseTruth()">VERDAD</button>
-    <button class="big" onclick="chooseDare()">RETO</button>
-  </div>
+    <input type="text" id="playerInput" placeholder="Player name">
+    <button onclick="addPlayer()">Add</button>
+    <button class="primary" onclick="startGame()">Start Game</button>
+  </section>
 
-  <div id="result" class="card hidden">
-    <h2 id="playerName"></h2>
-    <p id="challengeText"></p>
+  <section id="playerSelect" class="hidden">
+    <h2 class="subtitle">Who plays?</h2>
+    <div id="players" class="players"></div>
+  </section>
 
-    <button onclick="giveCompliment()">Cumplido</button>
-    <button onclick="nextTurn()">Abandonar</button>
-  </div>
+  <section id="resultScreen" class="hidden">
+    <h2 id="currentPlayer" class="player-name"></h2>
+    <p id="challengeText" class="challenge"></p>
 
-  <script src="offly.data.js"></script>
-  <script src="offly.js"></script>
+    <div class="actions">
+      <button class="truth" onclick="choose('truth')">Truth</button>
+      <button class="dare" onclick="choose('dare')">Dare</button>
+    </div>
+
+    <div class="actions">
+      <button class="complete" onclick="completed()">Completed</button>
+      <button class="retire" onclick="retire()">Abandon</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="offly.js"></script>
 </body>
 </html>
