@@ -1,136 +1,64 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+let players = [];
+let current = 0;
 
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_MESSAGING_ID",
-  appId: "TU_APP_ID"
-};
+function addName() {
+  const input = document.getElementById("nameInput");
+  if (!input.value.trim()) return;
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const language = localStorage.getItem("language") || "en";
-document.documentElement.lang = language;
-
-const UI = {
-  en:{title:"Add players",add:"Add player",start:"Start game",play:"PLAY",
-      challenge:"Challenge",truth:"Truth",completed:"Completed",retire:"Retire"},
-  es:{title:"Agregar jugadores",add:"Agregar jugador",start:"Iniciar juego",play:"JUGAR",
-      challenge:"Reto",truth:"Verdad",completed:"Completado",retire:"Retirarse"},
-  fr:{title:"Ajouter des joueurs",add:"Ajouter joueur",start:"Commencer",play:"JOUER",
-      challenge:"Défi",truth:"Vérité",completed:"Terminé",retire:"Se retirer"}
-}[language];
-
-const $=id=>document.getElementById(id);
-$("title").innerText=UI.title;
-$("addBtn").innerText=UI.add;
-$("startBtn").innerText=UI.start;
-$("playBtn").innerText=UI.play;
-$("challengeBtn").innerText=UI.challenge;
-$("truthBtn").innerText=UI.truth;
-$("completeBtn").innerText=UI.completed;
-$("retireBtn").innerText=UI.retire;
-
-const sndClick=$("sndClick");
-const sndSpin=$("sndSpin");
-const sndSelect=$("sndSelect");
-const sndWin=$("sndWin");
-
-let players=[];
-let used=[];
-let current=null;
-
-function addPlayer(){
-  const name=$("playerInput").value.trim();
-  if(!name) return;
-  sndClick.play();
-  players.push({name,status:"active"});
-  $("playerInput").value="";
+  players.push(input.value.trim());
+  input.value = "";
   renderPlayers();
-  if(players.length>=2) $("startBtn").classList.remove("hidden");
 }
-$("addBtn").onclick=addPlayer;
-$("playerInput").addEventListener("keydown",e=>e.key==="Enter"&&addPlayer());
 
-$("startBtn").onclick=()=>{
-  $("addPlayers").classList.add("hidden");
-  $("game").classList.remove("hidden");
-  renderGame();
-};
+function startGame() {
+  if (players.length === 0) return;
 
-function renderPlayers(){
-  $("playersList").innerHTML="";
-  players.forEach(p=>{
-    const s=document.createElement("span");
-    s.innerText=p.name;
-    $("playersList").appendChild(s);
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("choices").classList.remove("hidden");
+
+  renderPlayers();
+}
+
+function renderPlayers() {
+  const div = document.getElementById("players");
+  div.innerHTML = "";
+
+  players.forEach((name, i) => {
+    const el = document.createElement("div");
+    el.textContent = name;
+    el.className = "player" + (i === current ? " active" : "");
+    div.appendChild(el);
   });
 }
 
-function renderGame(){
-  $("namesBox").innerHTML="";
-  players.forEach(p=>{
-    const d=document.createElement("div");
-    d.className=`player ${p.status}`;
-    d.innerText=p.name;
-    $("namesBox").appendChild(d);
-  });
+function chooseTruth() {
+  showResult(randomItem(TRUTHS.es));
 }
 
-$("playBtn").onclick=()=>{
-  sndSpin.play();
-  let active=players.filter(p=>p.status==="active"&&!used.includes(p));
-  if(active.length===0){
-    used=[];
-    players.forEach(p=>p.status==="used"&&(p.status="active"));
-    renderGame();
-    return;
-  }
-
-  setTimeout(()=>{
-    current=active[Math.floor(Math.random()*active.length)];
-    used.push(current);
-    current.status="used";
-    sndSelect.play();
-    showModal();
-    renderGame();
-  },5000);
-};
-
-function showModal(){
-  $("modal").classList.remove("hidden");
-  $("currentPlayer").innerText=current.name;
-  $("resultText").innerText="";
+function chooseDare() {
+  showResult(randomItem(DARES.es));
 }
 
-$("challengeBtn").onclick=()=>showResult("challenge");
-$("truthBtn").onclick=()=>showResult("truth");
+function showResult(text) {
+  document.getElementById("choices").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
 
-function showResult(type){
-  const list=type==="challenge"?CHALLENGES:TRUTHS;
-  const item=list[language][Math.floor(Math.random()*100)];
-  $("resultText").innerText=item;
-  saveToFirebase(type,item);
+  document.getElementById("playerName").textContent = players[current];
+  document.getElementById("challengeText").textContent = text;
 }
 
-$("completeBtn").onclick=()=>$("modal").classList.add("hidden");
+function nextTurn() {
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("choices").classList.remove("hidden");
 
-$("retireBtn").onclick=()=>{
-  current.status="retired";
-  $("modal").classList.add("hidden");
-  renderGame();
-};
+  current = (current + 1) % players.length;
+  renderPlayers();
+}
 
-async function saveToFirebase(type,text){
-  await addDoc(collection(db,"offlySessions"),{
-    player:current.name,
-    type,
-    text,
-    language,
-    time:new Date()
-  });
+function giveCompliment() {
+  alert("💖 Cumplido enviado");
+}
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
