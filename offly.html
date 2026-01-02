@@ -4,45 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TruthX – Offline Friendly</title>
-
   <link rel="stylesheet" href="offly.css">
 </head>
 
 <body>
 
-<div class="container">
+<main class="container">
 
-  <section id="addPlayers">
-    <h1 class="title">Truth<span>X</span></h1>
-    <p class="subtitle">Add players</p>
+  <h1 class="title">
+    <span>Truth</span>X
+  </h1>
 
-    <input type="text" id="playerInput" placeholder="Player name">
-    <button onclick="addPlayer()">Add</button>
-    <button class="primary" onclick="startGame()">Start Game</button>
+  <section id="screen-players">
+
+    <p class="subtitle" id="addPlayersText">Add players</p>
+
+    <input
+      type="text"
+      id="playerInput"
+      placeholder="Player name"
+      maxlength="15"
+    />
+
+    <button class="primary" onclick="addPlayer()">Add</button>
+
+    <div class="players" id="playersList"></div>
+
+    <button onclick="startGame()">Start game</button>
+
   </section>
 
-  <section id="playerSelect" class="hidden">
-    <h2 class="subtitle">Who plays?</h2>
-    <div id="players" class="players"></div>
+  <section id="screen-select" class="hidden">
+
+    <p class="subtitle" id="selectPlayerText">Select a player</p>
+
+    <div class="players" id="selectPlayers"></div>
+
   </section>
 
-  <section id="resultScreen" class="hidden">
-    <h2 id="currentPlayer" class="player-name"></h2>
-    <p id="challengeText" class="challenge"></p>
+  <section id="screen-action" class="hidden">
+
+    <div class="player-name" id="currentPlayer"></div>
 
     <div class="actions">
-      <button class="truth" onclick="choose('truth')">Truth</button>
-      <button class="dare" onclick="choose('dare')">Dare</button>
+      <button class="truth" onclick="chooseTruth()">Truth</button>
+      <button class="dare" onclick="chooseDare()">Dare</button>
     </div>
 
-    <div class="actions">
-      <button class="complete" onclick="completed()">Completed</button>
-      <button class="retire" onclick="retire()">Abandon</button>
-    </div>
   </section>
 
-</div>
+  <section id="screen-result" class="hidden">
+
+    <div class="player-name" id="resultPlayer"></div>
+
+    <div class="challenge" id="resultText"></div>
+
+    <div class="actions">
+      <button class="complete" onclick="completeTurn()">Completed</button>
+      <button class="retire" onclick="retirePlayer()">Abandon</button>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="offly.data.js"></script>
 
 <script src="offly.js"></script>
+
 </body>
 </html>
+
+
