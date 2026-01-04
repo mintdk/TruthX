@@ -13,10 +13,24 @@ body {
   color: white;
 }
 
-.container {
-  width: 95%;
+.top-bar {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+}
+
+.logo {
+  width: 55px;
+}
+
+.card {
+  width: 90%;
   max-width: 420px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 20px;
+  padding: 30px 20px;
   text-align: center;
+  box-shadow: 0 0 25px #00e5ff;
 }
 
 .title {
@@ -24,107 +38,68 @@ body {
   margin-bottom: 10px;
 }
 
-.title span {
+.truth {
+  color: #00e5ff;
+  text-shadow: 0 0 20px #00e5ff;
+}
+
+.x {
   color: red;
-  text-shadow: 0 0 15px red;
+  text-shadow: 0 0 25px red;
 }
 
 .subtitle {
-  opacity: 0.9;
   margin-bottom: 15px;
+  opacity: 0.9;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 button {
-  width: 100%;
   padding: 12px;
-  margin: 6px 0;
-  border-radius: 10px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
+  border-radius: 12px;
+  border: 2px solid #00e5ff;
   background: transparent;
   color: white;
-  border: 2px solid #00e5ff;
+  font-size: 1rem;
+  cursor: pointer;
   box-shadow: 0 0 12px #00e5ff;
 }
 
-button.primary {
+button:hover {
   background: #00e5ff;
   color: black;
 }
 
-.players {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
-.players button {
-  width: auto;
-  padding: 10px 15px;
+.decor-image {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 70px;
+  opacity: 0.9;
 }
 
-.players button.played {
-  background: #ffe600;
-  color: black;
-  box-shadow: 0 0 15px #ffe600;
+.credit {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  font-size: 0.8rem;
 }
 
-.players button.retired {
-  background: #444;
-  color: #999;
-  box-shadow: none;
-  text-decoration: line-through;
+.credit a {
+  color: #aaa;
+  text-decoration: none;
 }
 
 .hidden {
   display: none;
-}
-
-.player-name {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.challenge {
-  font-size: 1.2rem;
-  margin: 20px 0;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions button {
-  flex: 1;
-}
-
-button.truth {
-  border-color: #00ffcc;
-  box-shadow: 0 0 15px #00ffcc;
-}
-
-button.dare {
-  border-color: red;
-  box-shadow: 0 0 15px red;
-}
-
-button.complete {
-  border-color: #00ff00;
-  box-shadow: 0 0 15px #00ff00;
-}
-
-button.retire {
-  border-color: #777;
-  box-shadow: none;
 }
