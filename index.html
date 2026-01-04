@@ -4,54 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TruthX</title>
+
   <link rel="stylesheet" href="style.css">
+
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 
 <body>
+  <header class="top-bar">
+    <img src="assets/logo.png" alt="TruthX Logo" class="logo">
+  </header>
 
-<header class="top-bar">
-  <img src="assets/logo.png" alt="TruthX Logo" class="logo">
-</header>
+  <main class="card">
 
-<main class="card">
+    <h1 class="title">
+      <span class="truth">Truth</span><span class="x">X</span>
+    </h1>
 
-  <h1 class="title">
-    <span class="truth">Truth</span><span class="x-neon">X</span>
-  </h1>
+    <p class="subtitle" id="subtitle">Choose your language</p>
 
-  <p class="subtitle" id="subtitle">Choose your language</p>
-
-  <div class="buttons">
-    <button id="btnEs" onclick="selectLanguage('es')">Spanish</button>
-    <button id="btnEn" onclick="selectLanguage('en')">English</button>
-    <button id="btnFr" onclick="selectLanguage('fr')">French</button>
-  </div>
-
-  <div id="options" class="hidden">
-    <p class="subtitle" id="playTitle">How do you want to play?</p>
-    <div class="buttons">
-      <button id="btnOffline" onclick="selectMode('offline')">Offline</button>
-      <button id="btnOnline" onclick="selectMode('online')">Online</button>
+    <div class="buttons" id="langButtons">
+      <button onclick="selectLanguage('es')">Spanish</button>
+      <button onclick="selectLanguage('en')">English</button>
+      <button onclick="selectLanguage('fr')">French</button>
     </div>
-  </div>
-  
-  <div id="styles" class="hidden">
-    <p class="subtitle" id="modeTitle">Mode</p>
-    <div class="buttons">
-      <button id="btnFriendly" onclick="selectStyle('friendly')">Friendly</button>
-      <button id="btnHot" onclick="selectStyle('hot')">Hot</button>
-      <button id="btnCouples" onclick="selectStyle('couples')">Couples</button>
+
+    <div class="hidden" id="modeSection">
+      <p class="subtitle" id="modeText">How do you want to play?</p>
+      <div class="buttons">
+        <button onclick="selectMode('offline')">Offline</button>
+        <button disabled class="disabled">Online</button>
+      </div>
     </div>
-  </div>
 
-</main>
+    <div class="hidden" id="styleSection">
+      <p class="subtitle" id="styleText">Choose a mode</p>
+      <div class="buttons">
+        <button onclick="selectStyle('friendly')">Friendly</button>
+        <button onclick="selectStyle('hot')">Hot</button>
+        <button onclick="selectStyle('couples')">Couples</button>
+      </div>
+    </div>
 
-<footer class="credit">
-  <a href="https://www.instagram.com/min_tdk/" target="_blank">
-    Created by MintDK
+  </main>
+
+  <a href="https://mintdk.github.io/Mintdk/" target="_blank">
+    <img src="assets/mintdk.png" class="decor-image" alt="MintDK">
   </a>
-</footer>
 
-<script src="main.js"></script>
+  <footer class="credit">
+    <a href="https://www.instagram.com/min_tdk/" target="_blank">
+      Created by MintDK
+    </a>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
