@@ -1,86 +1,69 @@
+const state = {
+  language: null,
+  mode: null,
+  style: null
+};
+
 const firebaseConfig = {
   apiKey: "AIzaSyDtckkcvckgTQZfnchhmeb97Fhcaz6ocVw",
   authDomain: "truthx-5b2d2.firebaseapp.com",
+  databaseURL: "https://truthx-5b2d2-default-rtdb.firebaseio.com",
   projectId: "truthx-5b2d2",
   storageBucket: "truthx-5b2d2.firebasestorage.app",
   messagingSenderId: "8938974196",
   appId: "1:8938974196:web:1751ed7cf33c61117767a1"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-let state = {
-  language: "en",
-  mode: "",
-  style: ""
-};
-
-const texts = {
-  en: {
-    subtitle: "Choose your language",
-    mode: "How do you want to play?",
-    style: "Choose a mode",
-    offline: "Offline",
-    online: "Online",
-    friendly: "Friendly",
-    hot: "Hot",
-    couples: "Couples"
-  },
+const translations = {
   es: {
     subtitle: "Elige tu idioma",
-    mode: "¿Cómo quieres jugar?",
-    style: "Elige un modo",
-    offline: "Offline",
-    online: "Online",
-    friendly: "Amistoso",
-    hot: "Picante",
-    couples: "Parejas"
+    playTitle: "¿Cómo quieres jugar?",
+    modeTitle: "Elige un modo"
+  },
+  en: {
+    subtitle: "Choose your language",
+    playTitle: "How do you want to play?",
+    modeTitle: "Choose a mode"
   },
   fr: {
-    subtitle: "Choisis ta langue",
-    mode: "Comment veux-tu jouer ?",
-    style: "Choisis un mode",
-    offline: "Hors ligne",
-    online: "En ligne",
-    friendly: "Amical",
-    hot: "Chaud",
-    couples: "Couples"
+    subtitle: "Choisissez votre langue",
+    playTitle: "Comment voulez-vous jouer ?",
+    modeTitle: "Choisissez un mode"
   }
 };
-function selectLanguage(lang) {
-  state.language = lang;
-  applyLanguage();
-  document.getElementById("modeSection").classList.remove("hidden");
-}
-function selectMode(mode) {
-  state.mode = mode;
-  document.getElementById("styleSection").classList.remove("hidden");
-}
-
-function selectStyle(style) {
-  state.style = style;
-
-  firebase.database().ref("sessions").push(state);
-
-  if (style === "friendly") location.href = "offly.html";
-  if (style === "hot") location.href = "offt.html";
-  if (style === "couples") location.href = "offle.html";
-}
-
 function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
 
-  document.documentElement.lang = lang;
+  document.getElementById("subtitle").innerText = t.subtitle;
+  document.getElementById("modeText").innerText = t.playTitle;
+  document.getElementById("styleText").innerText = t.modeTitle;
+}
 
-  const subtitle = document.getElementById("subtitle");
-  if (subtitle) subtitle.innerText = t.subtitle;
+function selectLanguage(lang) {
+  state.language = lang;
+  applyLanguage(lang);
 
-  const modeText = document.getElementById("modeText");
-  if (modeText) modeText.innerText = t.playTitle;
+  document.getElementById("langButtons").classList.add("hidden");
+  document.getElementById("modeSection").classList.remove("hidden");
 
-  const styleText = document.getElementById("styleText");
-  if (styleText) styleText.innerText = t.modeTitle;
+  db.ref("sessions/temp").set(state);
+}
+
+function selectMode(mode) {
+  state.mode = mode;
+  document.getElementById("styleSection").classList.remove("hidden");
+  db.ref("sessions/temp").update(state);
+}
+
+function selectStyle(style) {
+  state.style = style;
+  db.ref("sessions/temp").update(state);
+
+  if (style === "friendly") location.href = "offly.html";
+  if (style === "hot") location.href = "offt.html";
+  if (style === "couples") location.href = "offle.html";
 }
