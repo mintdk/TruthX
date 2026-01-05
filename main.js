@@ -1,4 +1,3 @@
-// 🔥 Firebase config (USA TU CONFIG REAL)
 const firebaseConfig = {
   apiKey: "AIzaSyDtckkcvckgTQZfnchhmeb97Fhcaz6ocVw",
   authDomain: "truthx-5b2d2.firebaseapp.com",
@@ -70,10 +69,18 @@ function selectStyle(style) {
   if (style === "couples") location.href = "offle.html";
 }
 
-function applyLanguage() {
-  const t = texts[state.language];
+function applyLanguage(lang) {
+  const t = translations[lang];
+  if (!t) return;
 
-  document.getElementById("subtitle").innerText = t.subtitle;
-  document.getElementById("modeText").innerText = t.mode;
-  document.getElementById("styleText").innerText = t.style;
+  document.documentElement.lang = lang;
+
+  const subtitle = document.getElementById("subtitle");
+  if (subtitle) subtitle.innerText = t.subtitle;
+
+  const modeText = document.getElementById("modeText");
+  if (modeText) modeText.innerText = t.playTitle;
+
+  const styleText = document.getElementById("styleText");
+  if (styleText) styleText.innerText = t.modeTitle;
 }
