@@ -1,1 +1,54 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TruthX - Offline</title>
+  <link rel="stylesheet" href="offly.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div id="setup">
+    <h1 class="title">Truth<span>X</span></h1>
+    <p>Add players</p>
+    <input id="playerInput" placeholder="Enter player name">
+    <button class="primary" onclick="addPlayer()">Add</button>
+
+    <div id="playersList" class="players"></div>
+
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+
+  <div id="game" class="hidden">
+    <h2>Players</h2>
+    <div id="playerGrid" class="players grid"></div>
+    <button onclick="spinWheel()">Play</button>
+  </div>
+
+
+  <div id="selection" class="hidden">
+    <h2 id="selectedName" class="player-name"></h2>
+    <div class="actions">
+      <button class="truth" onclick="chooseTruth()">Truth</button>
+      <button class="dare" onclick="chooseDare()">Dare</button>
+    </div>
+  </div>
+
+
+  <div id="challengeScreen" class="hidden">
+    <h2 id="challengeName" class="player-name"></h2>
+    <p id="challengeText" class="challenge"></p>
+    <div class="actions">
+      <button class="complete" onclick="completeChallenge()">Done</button>
+      <button class="retire" onclick="retirePlayer()">Give Up</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="offly.js"></script>
+</body>
+</html>
