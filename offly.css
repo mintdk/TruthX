@@ -1,62 +1,80 @@
-body {
-  background: #0b0b12;
-  color: white;
-  font-family: system-ui, sans-serif;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
+body{
+  background:#02010a;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  font-family:Arial;
 }
 
-.card {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 16px;
-  background: #121226;
-  box-shadow: 0 0 20px #ff004c55;
+.container{
+  width:95%;
+  max-width:420px;
+  text-align:center;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: none;
+.title span{
+  color:red;
+  text-shadow:0 0 15px red;
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 12px;
-  background: #ff004c;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.players{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
 }
 
-button.big {
-  font-size: 22px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
 }
 
-.hidden {
-  display: none;
+.players button{
+  padding:10px;
+  border-radius:10px;
+  border:2px solid #00e5ff;
+  background:transparent;
+  color:white;
+  box-shadow:0 0 12px #00e5ff;
 }
 
-.players {
-  margin: 20px auto;
+.played{
+  background:#ffe600;
+  color:black;
 }
 
-.player {
-  opacity: 0.3;
-  font-size: 20px;
-  margin: 6px 0;
-  transition: 0.3s;
+.retired{
+  background:#333;
+  color:#999;
+  text-decoration:line-through;
+  box-shadow:none;
 }
 
-.player.active {
-  opacity: 1;
-  color: #ff004c;
-  text-shadow: 0 0 15px #ff004c;
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:2px solid #00e5ff;
+  background:transparent;
+  color:white;
 }
+
+.primary{
+  background:#00e5ff;
+  color:black;
+}
+
+.truth{border-color:#00ffcc; box-shadow:0 0 12px #00ffcc;}
+.dare{border-color:red; box-shadow:0 0 12px red;}
+.complete{border-color:#00ff00; box-shadow:0 0 12px #00ff00;}
+.retire{border-color:#777; box-shadow:none;}
+
+.hidden{display:none;}
+
+.player-name{font-size:1.7rem;}
+.challenge{margin:15px 0;}
+.actions{display:flex; gap:10px;}
+.actions button{flex:1;}
