@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TruthX - Offline</title>
-  <link rel="stylesheet" href="offly.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TruthX Offline</title>
+
+<link rel="stylesheet" href="offly.css">
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
+
 <body>
 
 <div class="container">
 
+  <h1 class="title">
+    <span class="truth">Truth</span><span class="x">X</span>
+  </h1>
+
   <div id="setup">
-    <h1 class="title">Truth<span>X</span></h1>
-    <p>Add players</p>
-    <input id="playerInput" placeholder="Enter player name">
-    <button class="primary" onclick="addPlayer()">Add</button>
-
-    <div id="playersList" class="players"></div>
-
+    <p>Add Players</p>
+    <input id="playerInput" placeholder="Player name">
+    <button onclick="addPlayer()">Add</button>
     <button onclick="startGame()">Start Game</button>
-  </div>
 
+    <div id="playerList"></div>
+  </div>
 
   <div id="game" class="hidden">
-    <h2>Players</h2>
-    <div id="playerGrid" class="players grid"></div>
-    <button onclick="spinWheel()">Play</button>
-  </div>
+    <div id="roulette"></div>
 
-
-  <div id="selection" class="hidden">
-    <h2 id="selectedName" class="player-name"></h2>
-    <div class="actions">
-      <button class="truth" onclick="chooseTruth()">Truth</button>
-      <button class="dare" onclick="chooseDare()">Dare</button>
+    <div id="choice" class="hidden">
+      <div class="player-name" id="activePlayer"></div>
+      <button class="truth-btn" onclick="showTruth()">Truth</button>
+      <button class="dare-btn" onclick="showDare()">Dare</button>
     </div>
-  </div>
 
-
-  <div id="challengeScreen" class="hidden">
-    <h2 id="challengeName" class="player-name"></h2>
-    <p id="challengeText" class="challenge"></p>
-    <div class="actions">
-      <button class="complete" onclick="completeChallenge()">Done</button>
-      <button class="retire" onclick="retirePlayer()">Give Up</button>
+    <div id="challengeBox" class="hidden">
+      <div class="challenge" id="challengeText"></div>
+      <button class="complete-btn" onclick="complete()">Complete</button>
+      <button class="giveup-btn" onclick="retire()">Give Up</button>
     </div>
   </div>
 
 </div>
 
+<script src="offly.data.js"></script>
 <script src="offly.js"></script>
+
 </body>
 </html>
