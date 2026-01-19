@@ -1,107 +1,106 @@
-const language = localStorage.getItem("language") || "en";
+const players = [];
+let selectedIndex = null;
 
-const DARES = {
-  en: ["Dance for 30 seconds", "Do 10 squats"],
-  es: ["Baila 30 segundos", "Haz 10 sentadillas"],
-  fr: ["Danse 30 secondes", "Fais 10 squats"]
-};
+const truths = [
+  "Tell your biggest secret.",
+  "Who was your last crush?",
+  "What is your worst habit?"
+];
 
-const TRUTHS = {
-  en: ["Confess a secret", "Say something embarrassing"],
-  es: ["Confiesa un secreto", "Di algo vergonzoso"],
-  fr: ["Avoue un secret", "Dis quelque chose de gênant"]
-};
+const dares = [
+  "Dance for 20 seconds.",
+  "Do 10 push-ups.",
+  "Sing a song loudly."
+];
 
-let players = [];
-let currentPlayerIndex = null;
-
-const addPlayersSection = document.getElementById("addPlayers");
-const playerSelectSection = document.getElementById("playerSelect");
-const resultScreen = document.getElementById("resultScreen");
-
-const playersContainer = document.getElementById("players");
-const currentPlayerEl = document.getElementById("currentPlayer");
-const challengeTextEl = document.getElementById("challengeText");
-const playerInput = document.getElementById("playerInput");
-
-function addPlayer() {
-  const name = playerInput.value.trim();
-  if (!name) return;
-
-  players.push({ name, status: "active" });
-  playerInput.value = "";
+function addPlayer(){
+  const input = document.getElementById("playerInput");
+  if(!input.value) return;
+  players.push({name:input.value, state:"active"});
+  input.value="";
+  renderSetup();
 }
 
-function startGame() {
-  if (players.length < 2) {
-    alert("Add at least 2 players");
-    return;
-  }
-
-  addPlayersSection.classList.add("hidden");
-  playerSelectSection.classList.remove("hidden");
-  renderPlayers();
-}
-
-function renderPlayers() {
-  playersContainer.innerHTML = "";
-
-  players.forEach((player, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = player.name;
-
-    if (player.status === "played") btn.classList.add("played");
-    if (player.status === "retired") btn.classList.add("retired");
-
-    btn.disabled = player.status !== "active";
-    btn.onclick = () => selectPlayer(index);
-
-    playersContainer.appendChild(btn);
+function renderSetup(){
+  const list = document.getElementById("playersList");
+  list.innerHTML="";
+  players.forEach(p=>{
+    const b=document.createElement("button");
+    b.innerText=p.name;
+    list.appendChild(b);
   });
 }
 
-function selectPlayer(index) {
-  currentPlayerIndex = index;
-
-  playerSelectSection.classList.add("hidden");
-  resultScreen.classList.remove("hidden");
-
-  currentPlayerEl.textContent = players[index].name;
-  challengeTextEl.textContent = "";
+function startGame(){
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  renderGrid();
 }
 
-function choose(type) {
-  const list = type === "dare" ? DARES[language] : TRUTHS[language];
-  const random = list[Math.floor(Math.random() * list.length)];
-  challengeTextEl.textContent = random;
-}
-function completed() {
-  players[currentPlayerIndex].status = "played";
-  resetRoundIfNeeded();
-  backToSelection();
-}
-
-function retire() {
-  players[currentPlayerIndex].status = "retired";
-  backToSelection();
+function renderGrid(){
+  const grid = document.getElementById("playerGrid");
+  grid.innerHTML="";
+  players.forEach(p=>{
+    const b=document.createElement("button");
+    b.innerText=p.name;
+    b.className=p.state;
+    grid.appendChild(b);
+  });
 }
 
-function resetRoundIfNeeded() {
-  const active = players.filter(p => p.status === "active");
-  if (active.length === 0) {
-    players.forEach(p => {
-      if (p.status === "played") p.status = "active";
-    });
+function spinWheel(){
+  const active = players.map((p,i)=>p.state==="active"?i:null).filter(i=>i!==null);
+  if(active.length===0){resetRound(); return;}
+
+  selectedIndex = active[Math.floor(Math.random()*active.length)];
+
+  document.getElementById("game").classList.add("hidden");
+  document.getElementById("selection").classList.remove("hidden");
+  document.getElementById("selectedName").innerText = players[selectedIndex].name;
+}
+
+function chooseTruth(){
+  showChallenge(truths);
+}
+
+function chooseDare(){
+  showChallenge(dares);
+}
+
+function showChallenge(arr){
+  document.getElementById("selection").classList.add("hidden");
+  document.getElementById("challengeScreen").classList.remove("hidden");
+  document.getElementById("challengeName").innerText = players[selectedIndex].name;
+  document.getElementById("challengeText").innerText = arr[Math.floor(Math.random()*arr.length)];
+}
+
+function completeChallenge(){
+  players[selectedIndex].state="played";
+  returnToGrid();
+}
+
+function retirePlayer(){
+  players[selectedIndex].state="retired";
+  returnToGrid();
+}
+
+function returnToGrid(){
+  document.getElementById("challengeScreen").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  checkRound();
+  renderGrid();
+}
+
+function checkRound(){
+  const remaining = players.filter(p=>p.state==="active");
+  if(remaining.length===0){
+    resetRound();
   }
 }
 
-function backToSelection() {
-  resultScreen.classList.add("hidden");
-  playerSelectSection.classList.remove("hidden");
-  renderPlayers();
-}
-
-
-function randomItem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+function resetRound(){
+  players.forEach(p=>{
+    if(p.state==="played") p.state="active";
+  });
+  renderGrid();
 }
