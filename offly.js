@@ -1,101 +1,101 @@
- const firebaseConfig = {
-  apiKey: "AIzaSyDtckkcvckgTQZfnchhmeb97Fhcaz6ocVw",
-  authDomain: "truthx-5b2d2.firebaseapp.com",
-  databaseURL: "https://truthx-5b2d2-default-rtdb.firebaseio.com",
-  projectId: "truthx-5b2d2",
-};
+const players = [];
+let activePlayers = [];
+let currentPlayer = null;
+let roundPlayed = new Set();
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const truths = [
+  "What is a secret you have never told anyone?",
+  "Who do you like the most here?",
+  "What was your most embarrassing moment?"
+];
 
-let players = [];
-let currentRound = [];
+const dares = [
+  "Do 10 push-ups",
+  "Sing a song loudly",
+  "Dance for 30 seconds"
+];
 
-function addPlayer(){
-  const input = document.getElementById("playerInput");
+function addPlayer() {
+  const input = document.getElementById("nameInput");
   const name = input.value.trim();
-  if(!name) return;
+  if (!name) return;
 
-  players.push({name,played:false,retired:false});
-  input.value="";
+  players.push({ name, retired: false });
+  input.value = "";
+}
+
+function startGame() {
+  if (players.length < 2) return alert("Add at least 2 players");
+
+  activePlayers = [...players];
+  document.getElementById("addPlayers").classList.add("hidden");
+  document.getElementById("playersSection").classList.remove("hidden");
   renderPlayers();
 }
 
-function renderPlayers(){
-  const list = document.getElementById("playerList");
-  list.innerHTML="";
+function renderPlayers() {
+  const grid = document.getElementById("playersGrid");
+  grid.innerHTML = "";
 
-  const grid=document.createElement("div");
-  grid.className="players-grid";
+  activePlayers.forEach(p => {
+    const btn = document.createElement("button");
+    btn.innerText = p.name;
 
-  players.forEach(p=>{
-    const b=document.createElement("div");
-    b.className="player"+(p.played?" played":"")+(p.retired?" retired":"");
-    b.innerText=p.name;
-    grid.appendChild(b);
+    if (p.retired) btn.classList.add("retired");
+    else if (roundPlayed.has(p.name)) btn.classList.add("played");
+
+    grid.appendChild(btn);
   });
-
-  list.appendChild(grid);
 }
 
-function startGame(){
-  document.getElementById("setup").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
-  spinRoulette();
-}
+function spin() {
+  const available = activePlayers.filter(
+    p => !p.retired && !roundPlayed.has(p.name)
+  );
 
-function spinRoulette(){
-  currentRound = players.filter(p=>!p.played && !p.retired);
-  if(currentRound.length===0){
-    players.forEach(p=>p.played=false);
-    currentRound=players.filter(p=>!p.retired);
+  if (available.length === 0) {
+    roundPlayed.clear();
+    renderPlayers();
+    return;
   }
 
-  const roulette=document.getElementById("roulette");
-  roulette.innerHTML="";
+  currentPlayer = available[Math.floor(Math.random() * available.length)];
 
-  let i=0;
-  const interval=setInterval(()=>{
-    const p=currentRound[i%currentRound.length];
-    roulette.innerText=p.name;
-    i++;
-  },300);
-
-  setTimeout(()=>{
-    clearInterval(interval);
-    const chosen=currentRound[Math.floor(Math.random()*currentRound.length)];
-    chosen.played=true;
-    document.getElementById("activePlayer").innerText=chosen.name;
-    document.getElementById("choice").classList.remove("hidden");
-    renderPlayers();
-  },3000);
+  document.getElementById("playersSection").classList.add("hidden");
+  document.getElementById("choiceSection").classList.remove("hidden");
+  document.getElementById("currentPlayer").innerText = currentPlayer.name;
 }
 
-function showTruth(){
-  const txt=TRUTHS.en[Math.floor(Math.random()*TRUTHS.en.length)];
-  showChallenge(txt);
+function chooseTruth() {
+  showChallenge(truths);
 }
 
-function showDare(){
-  const txt=DARES.en[Math.floor(Math.random()*DARES.en.length)];
-  showChallenge(txt);
+function chooseDare() {
+  showChallenge(dares);
 }
 
-function showChallenge(txt){
-  document.getElementById("choice").classList.add("hidden");
-  document.getElementById("challengeText").innerText=txt;
-  document.getElementById("challengeBox").classList.remove("hidden");
+function showChallenge(list) {
+  const challenge = list[Math.floor(Math.random() * list.length)];
+
+  document.getElementById("choiceSection").classList.add("hidden");
+  document.getElementById("challengeSection").classList.remove("hidden");
+
+  document.getElementById("challengePlayer").innerText = currentPlayer.name;
+  document.getElementById("challengeText").innerText = challenge;
 }
 
-function complete(){
-  document.getElementById("challengeBox").classList.add("hidden");
-  spinRoulette();
+function completeTurn() {
+  roundPlayed.add(currentPlayer.name);
+  resetToPlayers();
 }
 
-function retire(){
-  const name=document.getElementById("activePlayer").innerText;
-  const p=players.find(p=>p.name===name);
-  p.retired=true;
-  document.getElementById("challengeBox").classList.add("hidden");
-  spinRoulette();
+function retirePlayer() {
+  currentPlayer.retired = true;
+  resetToPlayers();
+}
+
+function resetToPlayers() {
+  document.getElementById("challengeSection").classList.add("hidden");
+  document.getElementById("playersSection").classList.remove("hidden");
+  renderPlayers();
 }
