@@ -7,7 +7,7 @@ const state = {
 const firebaseConfig = {
   apiKey: "AIzaSyDtckkcvckgTQZfnchhmeb97Fhcaz6ocVw",
   authDomain: "truthx-5b2d2.firebaseapp.com",
-  databaseURL: "https://truthx-5b2d2-default-rtdb.firebaseio.com",
+  databaseURL: "https://truthx-5b2d2-default-rtdb.firebaseio.com/",
   projectId: "truthx-5b2d2",
   storageBucket: "truthx-5b2d2.firebasestorage.app",
   messagingSenderId: "8938974196",
